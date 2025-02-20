@@ -53,3 +53,10 @@ Objetivo: Avaliar a capacidade de desenvolver uma funcionalidade simples de back
 
 **Tarefa:**<br>  
    Crie uma API simples para manipulação de dados (exemplo: cadastro de usuário, envio de mensagens, etc.). A API deve aceitar dados via requisição HTTP, validar as entradas e interagir com um banco de dados para armazenar as informações, se válidas.  
+
+
+### ENVIO DO TESTE
+Copiar endereço da API e colocar na variável de ambiente VITE_API_URL no frontend.
+Executar o backend com npm run start:dev
+Executar o frontend com npm run dev
+Acessar o frontend com o endereço indicado no console  

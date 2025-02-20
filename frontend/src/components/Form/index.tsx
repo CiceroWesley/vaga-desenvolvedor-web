@@ -1,13 +1,19 @@
 import React, { useState } from 'react'
 import { FormWrapper, Input, ErrorMessage, Button } from '../../styled';
+import users from '../../services/users';
+import { AxiosError } from 'axios';
 
 interface FormData {
     name: string;
     email: string;
     message: string;
-  }
+}
 
-const Form = () => {
+interface FormProps {
+    getUsers: () => Promise<void>; // Espera uma função assíncrona que retorna uma Promise
+}
+
+const Form = ({ getUsers }: FormProps) => {
     const [formData, setFormData] = useState<FormData>({ name: '', email: '', message: '' });
     const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
 
@@ -40,14 +46,22 @@ const Form = () => {
         return isValid;
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (validateForm()) {
-            alert('Formulário enviado com sucesso!');
+            try {
+                const { data } = await users.createUser(formData)
+                if (data) {
+                    alert('Usuário criado com sucesso')
+                    await getUsers()
+                }
+            } catch (error: any) {
+                alert(error.response.data.message[0])
+                console.log(error.response.data.message[0])
+            }
             // Resetar o formulário
             setFormData({ name: '', email: '', message: '' });
-            setErrors({});
         }
     };
 
